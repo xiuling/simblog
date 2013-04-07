@@ -2,6 +2,8 @@
 	session_start();
     if($_SESSION['name']){
         echo '<div class="logheader">Welcome back, '.$_SESSION['name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></div>';
+    }else{
+    	
     }
 ?>
 <html>

@@ -1,0 +1,17 @@
+.label{ width: 100px; display: inline-block; float: left;} 
+/*display保证设置的宽度可用，float将文字与框上面对齐 */
+.select{ width:100px;}
+.long{ width: 300px;}
+.mid{ width: 300px; height: 150px;}
+.comments{padding: 5px; margin-top: 10px; border: 1px solid lightpink;}
+.comments h3{padding: 0;}
+.comments p,.comments div { padding: 10px; margin: 0;}
+.postcomment{margin: 20px;}
+
+#error { background-color: #600; border: 1px solid #FF0; color: #FFF; text-align: center; margin: 10px; padding: 10px; font-size: 17px;}
+
+
+th { background-color: #999;}
+.odd_row {background-color: #EEE;}
+.even_row {background-color: #FFF;}
+

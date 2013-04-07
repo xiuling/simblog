@@ -7,15 +7,15 @@
 	if ($_GET['action'] == 'edit') {
 	//retrieve the record’s information
 		$query = 'SELECT title, `type`, `text`, slug FROM contents
-			WHERE cid = "' . $_GET['cid']. '"';
+			WHERE and cid = "' . $_GET['cid']. '"';
 		$result = mysql_query($query, $db) or die(mysql_error($db));
 		extract(mysql_fetch_assoc($result));
 	} else {
 		//set values to blank
-		$title = '';
-		$type = '';
-		$text = '';
-		$slug = '';
+		$title = isset($_GET['title'])?$_GET['title']:'';
+		$type = isset($_GET['type'])?$_GET['type']:'';
+		$text = isset($_GET['text'])?$_GET['text']:'';
+		$slug = isset($_GET['slug'])?$_GET['slug']:'';
 	}
 
 	if (isset($_GET['error']) && $_GET['error'] != '') {
@@ -34,23 +34,23 @@
 				<td><select name="type">
 			<?php
 				// select the movie type information
-				$query = 'SELECT name FROM metas WHERE type="category"
+				$query = 'SELECT mid,name FROM metas WHERE type="category"
 					ORDER BY mid desc';
 				$result = mysql_query($query, $db) or die(mysql_error($db));
 				// populate the select options with the results
 				while ($row = mysql_fetch_assoc($result)) {
 					foreach ($row as $value) {
-						if ($row['name'] == $type) {
-							echo ' <option value="' . $row['name'] .
+						if ($row['mid'] == $type) {
+							echo ' <option value="' . $row['mid'] .
 							'" selected="selected"> ';
 						} else {
-							echo ' <option value="' . $row['name'] . '" > ';							
+							echo ' <option value="' . $row['mid'] . '" > ';				
 						}
 						echo $row['name'] . ' </option> ';
 					}
 				}
 			?>
-				</select> </td>
+				</select>&nbsp;&nbsp;<a href="category.php?action=insert">Add</a> </td>
 			</tr> 
 			<tr>
 				<td> Content </td>
@@ -73,7 +73,7 @@
 			</tr>
 		</table>
 	</form>
-
+	
 <?php
     include 'foot.inc.php';
 ?>

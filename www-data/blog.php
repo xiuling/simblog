@@ -5,13 +5,13 @@
 
     include 'header.inc.php';
 
-    $query = 'SELECT cid,title,slug,type,`text`,created FROM contents WHERE cid="'.$_GET['cid'].'"';
+    $query = 'SELECT cid,title,contents.slug,metas.name,`text`,contents.created FROM contents,metas WHERE contents.type=metas.mid AND cid="'.$_GET['cid'].'"';
     $result = mysql_query($query, $db) or die (mysql_error($db));
     if (mysql_num_rows($result) > 0) {
         while ($row = mysql_fetch_assoc($result)) {
             echo ' <div class="contents"> ';
             echo ' <h3><a href="blog.php?cid='.$row['cid'].'"> ' . $row['title'] . '</a></h3>';
-            echo ' <p> type:&nbsp;' . $row['type'] . '&nbsp;&nbsp; created:&nbsp;' . $row['created'];
+            echo ' <p> type:&nbsp;' . $row['name'] . '&nbsp;&nbsp; created:&nbsp;' . $row['created'];
             echo ' <div> ' . $row['text'] . ' </div> ';
             echo '</div> ';
 		}

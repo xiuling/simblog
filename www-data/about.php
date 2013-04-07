@@ -39,28 +39,18 @@
 		</form>
 	</div>
 	<div id="wrap">
-		<div id="about">
 			<?php
-				$query = 'SELECT name,uid FROM users WHERE name="'.$_SESSION['name'].'"';
-				$result = mysql_query($query, $db) or die (mysql_error($db));
-				if (mysql_num_rows($result) > 0) {
-			        while ($row = mysql_fetch_assoc($result)) {
-			        	$uid = $row['uid'];
-			        	$name = $row['name'];
-			       }
-			    }
-			    $query = 'SELECT `text`,created FROM contents WHERE authorId="'.$uid.'"';
+			    $query = 'SELECT `text`,contents.created,users.name FROM contents,users WHERE type="about" AND contents.authorId=users.uid ORDER BY created DESC LIMIT 1';
 			    $result = mysql_query($query, $db) or die (mysql_error($db));
 				if (mysql_num_rows($result) > 0) {
-			        while ($row = mysql_fetch_assoc($result)) {
-			        	echo ' <div class="contents"> ';
-			            echo ' <h3><a href="about.php"> About Me</a></h3>';
-			            echo ' <p> Author:&nbsp;' . $name . '&nbsp;&nbsp; created:&nbsp;' . $row['created'];
+					echo ' <div class="contents"> ';
+			        echo ' <h3><a href="about.php"> About Us</a></h3>';
+			        while ($row = mysql_fetch_assoc($result)) {			        	
+			            echo ' <p> Author:&nbsp;' . $row['name'] . '&nbsp;&nbsp; created:&nbsp;' . $row['created'];
 			            echo ' <div> ' . $row['text'] . ' </div> ';
-			            echo '</div> ';
+			            echo '<hr />';
 			       }
-			    }
-			
+			    }			
 		echo '</div>';
 		echo ' <div class="comments"> ';
     	$query = 'SELECT coid, created, author, mail, `text` FROM comments WHERE type="about"';
@@ -91,9 +81,10 @@
         <input type="submit" value="Post" />&nbsp;&nbsp;<input type="reset" value="Reset" />
     </form>
     </div>
-
-<?php
-    echo '</div>';
-
-	include 'foot.inc.php';
+</div>
+<?php    
+    include 'sidebar.php';
 ?>
+<div id="foot" style="clear:both;"></div>
+</body>
+</html>

@@ -8,13 +8,13 @@
     
 	<?php
         // determine sorting order of table
-        $order = array(1 => 'title ASC', 2 => 'slug ASC', 3 => 'type ASC');
+        $order = array(1 => 'title ASC', 2 => 'slug ASC', 3 => 'name ASC');
         $o = (isset($_GET['o']) && ctype_digit($_GET['o'])) ? $_GET['o'] : 1;
         if (!in_array($o, array_keys($order))) {
             $o = 1;
         }
         // select list of characters for table
-        $query = 'SELECT cid,title,slug,type FROM contents WHERE type!="personal" and type!="about" ORDER BY ' . $order[$o];
+        $query = 'SELECT cid,title,contents.slug,metas.name FROM contents,metas WHERE allowComment=0 and contents.type=metas.mid ORDER BY ' . $order[$o];
         $result = mysql_query($query, $db) or die (mysql_error($db));
         if (mysql_num_rows($result) > 0) {
             echo ' <table> ';
@@ -32,7 +32,7 @@
                 echo ' </td> <td> ';
                 echo $row['slug'];
                 echo '</td> <td> ';
-                echo $row['type'];
+                echo $row['name'];
                 echo '</td> <td> ';
                 echo ' <a href="contents.php?action=edit&cid=' . $row['cid'] . '"> [EDIT] </a> ';
                 echo ' <a href="delete.php?cid=' . $row['cid'] . '" > [DELETE] </a> ';

@@ -98,7 +98,7 @@
 					die('The file you uploaded was not a supported filetype.');
 			}
 			//insert information into image table
-			$query = 'INSERT INTO contents(title, type) VALUES("' . $_POST['name'] . '", "personal")';
+			$query = 'INSERT INTO contents(title, type, allowComment) VALUES("' . $_POST['name'] . '", 0, 2)';
 			$result = mysql_query($query, $db) or die (mysql_error($db));
 			//retrieve the image_id that MySQL generated automatically when we inserted
 			//the new record
@@ -125,7 +125,7 @@
 			imagedestroy($image);
 
 			echo '<h4> Here is the picture: </h4>';
-			echo '<img src="../images/<?php echo $name; ?> " style="float:left;margin-right:10px;">';
+			echo '<img src="../images/'.$name.' " style="float:left;margin-right:10px;">';
 			echo '<p><a href="change.php">Go back</a></p>';
 			break;
 		case 'changeabout':
@@ -136,13 +136,32 @@
 		        	$uid = $row['uid'];
 		       }
 		    }
-			$query = 'INSERT INTO contents(`text`,type,created,authorId) VALUES("'.$_POST['text'].'","about","'.@date('Y-m-d h:m:s').'","'.$uid.'")';
+			$query = 'INSERT INTO contents(`text`,type,created,authorId,allowComment) VALUES("'.$_POST['text'].'",0,"'.@date('Y-m-d h:m:s').'","'.$uid.'",1)';
 			$result = mysql_query($query, $db) or die (mysql_error($db));
 			if($result){
 					echo 'About Page has been changed.';
 					header ('Refresh: 1; URL= about.php');
 			}
 			break;
+		case 'adduser':
+			$error = array();
+			$name = isset($_POST['name']) ? trim($_POST['name']) : '';
+			if (empty($name)) {
+				$error[] = urlencode('Please enter the username.');
+			}
+			$password = isset($_POST['password']) ? trim($_POST['password']) : '';
+			if (empty($password)) {
+				$error[] = urlencode('Please enter the password.');
+			}
+			$authCode = isset($_POST['authCode']) ? trim($_POST['authCode']) : '';
+			if(empty($error)){
+				$query = 'INSERT INTO users(name,password,authCode) VALUES("'.$name.'","'.$password.'","'.$authCode.'")';
+				$result = mysql_query($query, $db) or die (mysql_error($db));
+				if($result){
+						echo 'The New User has been added.';
+						header ('Refresh: 1; URL= change.php');
+				}
+			} 
 	}
 
 		include 'foot.inc.php';

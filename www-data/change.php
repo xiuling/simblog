@@ -38,7 +38,19 @@
 			<input type="submit" value="Update" /><input type="reset" value="Reset" />
 		</form>
 	</div>
-
+	<div class="adduser">
+		<h5>Add User</h5>
+		<form action="update.php?action=adduser" method="post"> 
+			<label for="name" class="label">Username</label><input type="text" name="name" class="long" /><br />
+			<label for="password" class="label">Password</label><input type="password" name="password" class="long" /><br />
+			</label for="authCode" class="label">Role</label>
+			<select name="authCode">
+				<option value="2">Administrator</option>
+				<option value="1">Editor</option>
+			</select><br />
+			<input type="submit" value="Add User" /><input type="reset" value="Reset" />
+		</form>
+	</div>
 
 <?php
 	include 'foot.inc.php';

@@ -31,7 +31,7 @@
 						"' . $_POST['slug'] . '",
 						"' . @date('Y-m-d h:m:s') . '")';
 			} else {
-				header('Location:contents.php?action=add'.' 
+				header('Location:contents.php?action=add&title='.$title.'&type='.$type.'&text='.$text.'&slug='.$slug.' 
 					&error='.join($error, urlencode('<br />')));
 			}
 		break;
@@ -66,6 +66,19 @@
 					'&error=' . join($error, urlencode('<br />')));
 			}
 		break;
+		case 'insert':
+			$error = array();
+			$name = isset($_POST['name']) ? trim($_POST['name']) : '';
+			$slug = isset($_POST['slug']) ? trim($_POST['slug']) : '';
+			$description = isset($_POST['description']) ? trim($_POST['description']) : '';
+			if (empty($name)) {
+				$error[] = urlencode('Please enter the category name.');
+			}
+			if(empty($error)){
+				$query = 'INSERT INTO metas(name,slug,type,description) VALUES ("'.$name.'","'.$slug.'","category","'.$description.'")';
+			}else {
+				header('Location:category.php?action=insert&name='.$name.'&slug='.$slug.'&description='.$description.'&error=' . join($error, urlencode('<br />')));
+			}
 	}
 	if (isset($query)) {
 		$result = mysql_query($query, $db) or die(mysql_error($db));
@@ -78,7 +91,7 @@
 <body>
 <p> Done!</p>
 <?php
-	header ('Refresh: 2; URL= admin.php');
+	header ('Refresh: 0; URL= admin.php');
 	echo ' <p> You will be redirected to your original page request. </p> ';
             echo ' <p> If your browser doesn\'t redirect you properly ' . 
                 'automatically, <a href="admin.php" >click here </a> . </p> ';
