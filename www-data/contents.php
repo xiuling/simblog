@@ -7,7 +7,7 @@
 	if ($_GET['action'] == 'edit') {
 	//retrieve the record’s information
 		$query = 'SELECT title, `type`, `text`, slug FROM contents
-			WHERE and cid = "' . $_GET['cid']. '"';
+			WHERE cid = "' . $_GET['cid']. '"';
 		$result = mysql_query($query, $db) or die(mysql_error($db));
 		extract(mysql_fetch_assoc($result));
 	} else {
