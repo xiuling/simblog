@@ -39,17 +39,19 @@
 		</form>
 	</div>
 	<div id="wrap">
+			 <div class="contents"> 
+			     <h3><a href="about.php"> About Us</a></h3>
 			<?php
 			    $query = 'SELECT `text`,contents.created,users.name FROM contents,users WHERE type="about" AND contents.authorId=users.uid ORDER BY created DESC LIMIT 1';
 			    $result = mysql_query($query, $db) or die (mysql_error($db));
-				if (mysql_num_rows($result) > 0) {
-					echo ' <div class="contents"> ';
-			        echo ' <h3><a href="about.php"> About Us</a></h3>';
+				if (mysql_num_rows($result) > 0) {					
 			        while ($row = mysql_fetch_assoc($result)) {			        	
 			            echo ' <p> Author:&nbsp;' . $row['name'] . '&nbsp;&nbsp; created:&nbsp;' . $row['created'];
 			            echo ' <div> ' . $row['text'] . ' </div> ';
 			            echo '<hr />';
 			       }
+			    }else{
+			    	echo '<p>There is nothing about author yet.</p>';
 			    }			
 		echo '</div>';
 		echo ' <div class="comments"> ';
