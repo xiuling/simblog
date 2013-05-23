@@ -1,9 +1,39 @@
 <?php
+	//include 'adminheader.inc.php';
+	session_start();
+    if($_SESSION['name']){
+        echo '<div class="logheader"><p class="Welcome">Welcome back, '.$_SESSION['name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
+?>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Blogs</title>
+<!--	<link rel="stylesheet" type="text/css" href="../css/base.css" />  -->
+	<link rel="stylesheet" type="text/css" href="../css/admincommon.css" />
+	<link rel="stylesheet" type="text/css" href="../css/page.css" />
+	<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+	<div id="nav"><a href="index.php">Blogs</a></div>
+	<div id="search">
+		<form method="get" action="search.php">
+			<label for="search">Search</label>
+<?php
+	echo '<input type="text" name="search" ';
+	if (isset($_GET['search'])) {
+		echo ' value="' . htmlspecialchars($_GET['search']) . '" ';
+	}
+	echo '/>';
+?>
+			<input type="submit" value="Search" />
+		</form>
+	</div>	
+	<div id="wrap">
+
+<?php
     include 'db.inc.php';
     $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die ('Unable to connect. Check your connection parameters.');
     mysql_select_db(MYSQL_DB, $db) or die(mysql_error($db));
-
-    include 'adminheader.inc.php';
 
     if (isset($_GET['error']) && $_GET['error'] != '') {
 		echo ' <div id="error"> ' . $_GET['error'] . ' </div> ';
@@ -17,7 +47,7 @@
 			<label for="oldPass" class="label">Old Password:</label><input type="password" name="oldPass" class="long"/><br />
 			<label for="newPass1" class="label">New Password:</label><input type="password" name="newPass1" class="long" /><br />
 			<label for="newPas2s" class="label">New Again:</label><input type="password" name="newPass2" class="long" /><br />
-			<input type="submit" value="Change" /><input type="reset" value="Reset" />
+			<div class="button"><input type="submit" value="Change" /><input type="reset" value="Reset" /></div>
 		</form>
 	</div>
 	<div class="changeImag">
@@ -27,7 +57,7 @@
 			<label for="uploadfile">Upload Image</label><input type="file" name="uploadfile" />
 			<small> <em> * Acceptable image formats include: GIF, JPG/JPEG and PNG.
 				</em> </small><br />
-			<input type="submit" value="Upload" />
+			<div class="button"><input type="submit" value="Upload" /></div>
 		</form>
 	</div>
 	<div class="about">
@@ -35,7 +65,7 @@
 		<form action="update.php?action=changeabout" method="post"> 
 			<label for="text" class="label">Update About</label><textarea name="text" class="mid"></textarea>
 			<br />
-			<input type="submit" value="Update" /><input type="reset" value="Reset" />
+			<div class="button aboutbutton"><input type="submit" value="Update" /><input type="reset" value="Reset" /></div>
 		</form>
 	</div>
 	<div class="adduser">
@@ -48,10 +78,22 @@
 				<option value="2">Administrator</option>
 				<option value="1">Editor</option>
 			</select><br />
-			<input type="submit" value="Add User" /><input type="reset" value="Reset" />
+			<div class="button"><input type="submit" value="Add User" /><input type="reset" value="Reset" /></div>
 		</form>
 	</div>
 
 <?php
-	include 'foot.inc.php';
+	//include 'adminfoot.inc.php';
+	}else{
+    	header ('Refresh: 1; URL= login.php');
+		echo ' <p> You have not logged in. You will be redirected to login page. </p> ';
+            echo ' <p> If your browser doesn\'t redirect you properly ' . 
+                'automatically, <a href="login.php" >click here </a> . </p> ';
+    }
 ?>
+
+	</div>
+	<div id="foot" style="clear:both;">
+	</div>
+</body>
+</html>

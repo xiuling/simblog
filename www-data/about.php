@@ -1,7 +1,7 @@
 <?php
 	session_start();
     if($_SESSION['name']){
-        echo '<div class="logheader">Welcome back, '.$_SESSION['name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></div>';
+        echo '<div class="logheader"><p class="welcome">Welcome back, '.$_SESSION['name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
     }
     include 'db.inc.php';
     $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die ('Unable to connect. Check your connection parameters.');
@@ -19,24 +19,24 @@
 </head>
 <body id="intro">
 	<div id="banner"><a href="index.php">Blogs</a></div>
+	<div id="search">
+		<form method="get" action="search.php">
+			<label for="search">Search</label>
+	<?php
+		echo '<input type="text" name="search" ';
+		if (isset($_GET['search'])) {
+			echo ' value="' . htmlspecialchars($_GET['search']) . '" ';
+		}
+		echo '/>';
+	?>
+			<div class="button"><input type="submit" value="Search" /></div>
+		</form>
+	</div>
 	<div id="nav">
 		<ul>
 			<li id="home"><a href="index.php">Home</a></li>
 			<li id="about"><a href="about.php">About</a></li>
 		</ul>
-	</div>
-	<div id="search">
-		<form method="get" action="search.php">
-			<label for="search">Search</label>
-<?php
-	echo '<input type="text" name="search" ';
-	if (isset($_GET['search'])) {
-		echo ' value="' . htmlspecialchars($_GET['search']) . '" ';
-	}
-	echo '/>';
-?>
-			<input type="submit" value="Search" />
-		</form>
 	</div>
 	<div id="wrap">
 			 <div class="contents"> 
@@ -58,7 +58,7 @@
     	$query = 'SELECT coid, created, author, mail, `text` FROM comments WHERE type="about"';
 	    $result = mysql_query($query,$db) or die(mysql_error($db));
 	    if(mysql_num_rows($result) > 0){
-	        echo '<h3>Commemts Here:</h3>'; 
+	        echo '<h4>Commemts Here:</h4>'; 
 	        while ($row = mysql_fetch_assoc($result)) {                      
 	            echo '<hr /> <p>author:&nbsp;' . $row['author'] .'&nbsp;&nbsp; mail:&nbsp;' . $row['mail'] . '&nbsp;&nbsp; created:&nbsp;' . $row['created'];
 	            echo ' <div> ' . $row['text'] . ' </div> ';
