@@ -1,8 +1,8 @@
 <?php   
 	//include 'adminheader.inc.php';
 	session_start();
-    if($_SESSION['name']){
-        echo '<div class="logheader"><p class="welcome">Welcome back, '.$_SESSION['name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
+    if($_SESSION['username']){
+        echo '<div class="logheader"><p class="welcome">Welcome back, '.$_SESSION['username'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
 ?>
 <html>
 <head>
@@ -14,7 +14,8 @@
 	<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-	<div id="nav"><a href="index.php">Blogs</a></div>
+<div id="head">
+    <div id="banner"><a href="index.php">Blogs</a></div>
 	<div id="search">
 		<form method="get" action="search.php">
 			<label for="search">Search</label>
@@ -27,7 +28,7 @@
 ?>
 			<div class="button"><input type="submit" value="Search" /></div>
 		</form></div>
-	
+</div>	
 	<div id="wrap">
 
 <?php
@@ -40,7 +41,7 @@
 		echo ' <a href="' . $_SERVER['REQUEST_URI'] . ' & do=1"> yes </a> ';
 		echo 'or <a href="admin.php"> no </a> <hr />';
 
-		$query = 'SELECT cid,title,slug,type,`text`,created FROM contents WHERE cid="'.$_GET['cid'].'" ORDER BY created ';
+		$query = 'SELECT cid,title,slug,type,`text`,created, status FROM contents WHERE cid="'.$_GET['cid'].'" ORDER BY created ';
 	    $result = mysql_query($query, $db) or die (mysql_error($db));
 	    if (mysql_num_rows($result) > 0) {
 	        while ($row = mysql_fetch_assoc($result)) {
@@ -49,13 +50,28 @@
 	            echo ' <p> type:' . $row['type'] . '&nbsp;&nbsp; created:' . $row['created'];
 	            echo ' <div> ' . $row['text'] . ' </div> ';
 	            echo ' </div> ';
+	            
 			}
+
 		}
 	    echo ' </div> ';
 	} else {
+		$query = 'SELECT type, status FROM contents WHERE cid="'.$_GET['cid'].'" ORDER BY created ';
+	    $result = mysql_query($query, $db) or die (mysql_error($db));
+	    if (mysql_num_rows($result) > 0) {
+	        while ($row = mysql_fetch_assoc($result)) {
+	        	$type = $row['type'];
+	            $status = $row['status'];
+	        }
+	    }
+		
 		$query = 'DELETE FROM contents WHERE cid = "' . $_GET['cid'].'"';
 		$result = mysql_query($query, $db) or die(mysql_error($db));
 		if($result){
+			if($status == 0){
+				$query2 = 'UPDATE metas SET count = count-1 WHERE mid = "' . $type . '"';
+				$result2 = mysql_query($query2, $db) or die(mysql_error($db));					
+			}
 ?>
 	<p> Your blog has been deleted.</p>
 	<?php
@@ -65,8 +81,8 @@
                 'automatically, <a href="admin.php" >click here </a> . </p> ';
 ?>
 <?php
+		}
 	}
-}
 ?>
 
 <?php   

@@ -1,8 +1,8 @@
 <?php
 	//include 'adminheader.inc.php';
 	session_start();
-    if($_SESSION['name']){
-        echo '<div class="logheader"><p class="Welcome">Welcome back, '.$_SESSION['name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
+    if($_SESSION['username']){
+        echo '<div class="logheader"><p class="Welcome">Welcome back, '.$_SESSION['username'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
 ?>
 <html>
 <head>
@@ -14,7 +14,8 @@
 	<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-	<div id="nav"><a href="index.php">Blogs</a></div>
+<div id="head">
+    <div id="banner"><a href="index.php">Blogs</a></div>
 	<div id="search">
 		<form method="get" action="search.php">
 			<label for="search">Search</label>
@@ -28,6 +29,7 @@
 			<div class="button"><input type="submit" value="Search" /></div>
 		</form>
 	</div>	
+</div>
 	<div id="wrap">
 
 <?php
@@ -89,6 +91,10 @@
 				<td> Slug </td>
 				<td> <input type="text" name="slug" value="<?php echo $slug; ?>" class="long" /> </td>
 			</tr> 
+			<!-- <tr>
+				<td>Allow to Comment?</td>
+				<td><input type="checkbox" name="allowComment" /></td>
+			</tr> -->
 			<tr>
 				<td colspan="2">
 			<?php

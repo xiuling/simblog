@@ -1,7 +1,7 @@
 <?php
 	session_start();
-    if($_SESSION['name']){
-        echo '<div class="logheader"><p class="Welcome">Welcome back, '.$_SESSION['name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
+    if($_SESSION['username']){
+        echo '<div class="logheader"><p class="Welcome">Welcome back, '.$_SESSION['username'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
     }else{
     	
     }
@@ -18,6 +18,7 @@
 	</style>
 </head>
 <body id="intro">
+<div id="head">
 	<div id="banner"><a href="index.php">Blogs</a></div>
 	<div id="search">
 		<form method="get" action="search.php">
@@ -32,6 +33,7 @@
 			<div class="button"><input type="submit" value="Search" /></div>
 		</form>
 	</div>
+</div>
 	<div id="nav">
 		<ul>
 			<li id="home"><a href="index.php">Home</a></li>

@@ -1,8 +1,8 @@
 <?php
 	//include 'adminheader.inc.php';
 	session_start();
-    if($_SESSION['name']){
-        echo '<div class="logheader"><p class="Welcome">Welcome back, '.$_SESSION['name'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
+    if($_SESSION['username']){
+        echo '<div class="logheader"><p class="Welcome">Welcome back, '.$_SESSION['username'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
 ?>
 <html>
 <head>
@@ -14,7 +14,8 @@
 	<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
 </head>
 <body>
-	<div id="nav"><a href="index.php">Blogs</a></div>
+<div id="head">
+	<div id="banner"><a href="index.php">Blogs</a></div>
 	<div id="search">
 		<form method="get" action="search.php">
 			<label for="search">Search</label>
@@ -27,7 +28,8 @@
 ?>
 			<input type="submit" value="Search" />
 		</form>
-	</div>	
+	</div>
+</div>	
 	<div id="wrap">
 
 <?php
@@ -60,18 +62,33 @@
 			<div class="button"><input type="submit" value="Upload" /></div>
 		</form>
 	</div>
+	
 	<div class="about">
 		<h5>Change About</h5>
-		<form action="update.php?action=changeabout" method="post"> 
-			<label for="text" class="label">Update About</label><textarea name="text" class="mid"></textarea>
-			<br />
+	<?php
+		$query = 'SELECT `text`,cid FROM contents WHERE type=0';
+		$result = mysql_query($query, $db) or die (mysql_error($db));	
+		if($row = mysql_fetch_assoc($result)){
+			echo '<form action="update.php?action=changeabout&cid='.$row['cid'].'" method="post"> ';
+			echo '<label for="text" class="label">Update About</label><textarea name="text" class="mid">'. $row['text'] .'</textarea>';
+			echo '<br />';
+		}
+		else{
+			echo '<form action="update.php?action=changeabout" method="post">';
+			echo '<label for="text" class="label">Update About</label><textarea name="text" class="mid"></textarea>';
+			echo '<br />';
+		}
+	?>
 			<div class="button aboutbutton"><input type="submit" value="Update" /><input type="reset" value="Reset" /></div>
 		</form>
 	</div>
+	<?php
+		if ($_SESSION['authCode'] ==2){
+	?>
 	<div class="adduser">
 		<h5>Add User</h5>
 		<form action="update.php?action=adduser" method="post"> 
-			<label for="name" class="label">Username</label><input type="text" name="name" class="long" /><br />
+			<label for="username" class="label">Username</label><input type="text" name="username" class="long" /><br />
 			<label for="password" class="label">Password</label><input type="password" name="password" class="long" /><br />
 			</label for="authCode" class="label">Role</label>
 			<select name="authCode">
@@ -83,6 +100,7 @@
 	</div>
 
 <?php
+		}
 	//include 'adminfoot.inc.php';
 	}else{
     	header ('Refresh: 1; URL= login.php');

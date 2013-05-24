@@ -1,14 +1,22 @@
-body{ margin: 0; padding: 0; font-size: 16px;}
-#wrap{ width: 90%; top:15%; left: 5%; position: absolute;}
+body{ width: 95%; margin: 0 auto; padding: 0; font-size: 16px;}
+.logheader{ background: lightgrey; width: 100%;}
+.welcome{ width: 90%; margin: 0; padding: 0 64px; height: 1.5em; font: 1.2em bold; line-height: 1.5em;}
+.logheader a{font: 0.8em bold;}
+#head{overflow: hidden; margin: 10px 0;}
+#banner{float: left;  font-size: 30px; margin-left: 20px;}
+#banner a{text-decoration: none;}
+#banner a:link,#banner a:visited,#banner a:hover{color: #288EB8; font-weight: bold;}
+#search{float: right;}
+
+
+#wrap{width: 90%; margin: 0 auto;}
 #nav{float: left; margin: 1% 60% 5% 5%; font-size: 30px;}
 #nav a{text-decoration: none;}
 #nav a:link,#nav a:visited,#nav a:hover{color: #288EB8; font-weight: bold;}
 #search{margin: 10px 30px 5px 0;}
 #foot{clear: both;}
-.logheader{ background: lightgrey; width: 100%;}
-.welcome{ width: 90%; margin: 0; padding: 0 64px; height: 1.5em; font: 1.2em bold; line-height: 1.5em;}
-.logheader a{font: 0.8em bold;}
-h4 {margin-top: 40px; margin-bottom: 10px;}
+
+h4 { margin-bottom: 10px;}
 .changePass{ padding: 5px;}
  table{ width: 95%; margin: 0 auto;} 
 .addcate{width: 25%; float: right;}

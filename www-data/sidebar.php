@@ -1,3 +1,4 @@
+ </div>
  <div id="sidebar">
  	<h4>Category</h4>
  	<?php

@@ -39,5 +39,6 @@
 		mysql_free_result($result);
 	}
 
+	include 'sidebar.php';
 	include 'foot.inc.php';
 ?>

@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	include 'db.inc.php';
     $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die ('Unable to connect. Check your connection parameters.');
     mysql_select_db(MYSQL_DB, $db) or die(mysql_error($db));
@@ -24,12 +25,13 @@
 			}
 			if (empty($error)) {
 				$query = 'INSERT INTO
-				contents(title, `type`, `text`, slug, created, status)
+				contents(title, `type`, `text`, slug, created, status, authorId)
 				VALUES("' . $title . '",
 						"' . $type . '",
 						"' . $text . '",
 						"' . $slug . '",
-						"' . @date('Y-m-d h:m:s') . '", "0")';
+						"' . @date('Y-m-d h:m:s') . '", "0",
+						"' . $_SESSION['uid'] . '")';
 				$query2 = 'UPDATE metas SET count = count+1 WHERE mid = "' . $type. '"';
 			} else {
 				header('Location:contents.php?action=add&title='.$title.'&type='.$type.'&text='.$text.'&slug='.$slug.' 
@@ -114,12 +116,12 @@
 			}else{
 				if(empty($error)){
 					$query = 'INSERT INTO
-						contents(title, `type`, `text`, slug, created, status)
+						contents(title, `type`, `text`, slug, created, status, authorId)
 							VALUES("' . $title . '",
 						    	"' . $type1 . '",
 								"' . $text . '",
 								"' . $slug . '",
-								"' . @date('Y-m-d h:m:s') . '", "1")';
+								"' . @date('Y-m-d h:m:s') . '", "1", "' . $_SESSION['uid'] .'")';
 				}else{
 					header('Location:contents.php?action=add&title='.$title.'&type='.$type1.'&text='.$text.'&slug='.$slug.' 
 							&error='.join($error, urlencode('<br />')));

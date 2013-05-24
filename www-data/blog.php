@@ -11,7 +11,7 @@
         while ($row = mysql_fetch_assoc($result)) {
             echo ' <div class="contents"> ';
             echo ' <h3><a href="blog.php?cid='.$row['cid'].'"> ' . $row['title'] . '</a></h3>';
-            echo ' <p> type:&nbsp;' . $row['name'] . '&nbsp;&nbsp; created:&nbsp;' . $row['created'];
+            echo ' <p><span class="small"> type:&nbsp;' . $row['name'] . '&nbsp;&nbsp; created:&nbsp;' . $row['created'] .'</span></p>';
             echo ' <div> ' . $row['text'] . ' </div> ';
             echo '</div> ';
 		}
@@ -22,7 +22,7 @@
     if(mysql_num_rows($result) > 0){
         echo '<h3>Commemts Here:</h3>'; 
         while ($row = mysql_fetch_assoc($result)) {                      
-            echo '<hr /> <p>author:&nbsp;' . $row['author'] .'&nbsp;&nbsp; mail:&nbsp;' . $row['mail'] . '&nbsp;&nbsp; created:&nbsp;' . $row['created'];
+            echo '<hr /> <p><span class="small">author:&nbsp;' . $row['author'] .'&nbsp;&nbsp; mail:&nbsp;' . $row['mail'] . '&nbsp;&nbsp; created:&nbsp;' . $row['created'] .'</span></p>';
             echo ' <div> ' . $row['text'] . ' </div> ';
         }
     }else{        
