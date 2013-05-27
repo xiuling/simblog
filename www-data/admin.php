@@ -50,7 +50,7 @@
         switch ($_SESSION['authCode']) {
             case '2':
                 $query = 'SELECT cid,title,contents.slug,metas.name,status,users.username FROM contents,metas,users 
-                    WHERE allowComment=0 AND contents.type=metas.mid AND contents.authorId=users.uid ORDER BY ' . $order[$o];
+                    WHERE  contents.type=metas.mid AND contents.authorId=users.uid ORDER BY ' . $order[$o];
                 $result = mysql_query($query, $db) or die (mysql_error($db));
                 if (mysql_num_rows($result) > 0) {
                     echo ' <table> ';
@@ -87,7 +87,7 @@
                 break;
             case '1':
                 $query = 'SELECT cid,title,contents.slug,metas.name,status FROM contents,metas
-                    WHERE allowComment=0 AND contents.type=metas.mid  AND contents.authorId=' . $_SESSION['uid'] .' ORDER BY ' . $order[$o];
+                    WHERE contents.type=metas.mid  AND contents.authorId=' . $_SESSION['uid'] .' ORDER BY ' . $order[$o];
                 $result = mysql_query($query, $db) or die (mysql_error($db));
                 if (mysql_num_rows($result) > 0) {
                     echo ' <table> ';
