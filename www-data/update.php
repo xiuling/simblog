@@ -1,12 +1,43 @@
 <?php
-	$db = mysql_connect('localhost', 'testuser', '123456') or
-		die ('Unable to connect. Check your connection parameters.');
-	mysql_select_db('blog', $db) or die(mysql_error($db));
-	include 'adminheader.inc.php';
+    // include 'adminheader.inc.php';
+    session_start();
+    if($_SESSION['username']){
+        echo '<div class="logheader">Welcome back, '.$_SESSION['username'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></div>';
+?>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Blogs</title>
+<!--    <link rel="stylesheet" type="text/css" href="../css/base.css" />  -->
+    <link rel="stylesheet" type="text/css" href="../css/admincommon.css" />
+    <link rel="stylesheet" type="text/css" href="../css/page.css" />
+    <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
+</head>
+<body>
+    <div id="nav"><a href="index.php">Blogs</a></div>
+    <div id="search">
+        <form method="get" action="search.php">
+            <label for="search">Search</label>
+<?php
+    echo '<input type="text" name="search" ';
+    if (isset($_GET['search'])) {
+        echo ' value="' . htmlspecialchars($_GET['search']) . '" ';
+    }
+    echo '/>';
+?>
+            <input type="submit" value="Search" />
+        </form>
+    </div>
+    <div id="wrap">
+
+<?php
+	include 'db.inc.php';
+    $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die ('Unable to connect. Check your connection parameters.');
+    mysql_select_db(MYSQL_DB, $db) or die(mysql_error($db));
 
 	switch ($_GET['action']) {
 		case 'changepass':
-			$query = 'SELECT password FROM users WHERE name="'.$_SESSION['name'].'"';
+			$query = 'SELECT password FROM users WHERE username="'.$_SESSION['username'].'"';
 			$result = mysql_query($query, $db) or die (mysql_error($db));
 		    if (mysql_num_rows($result) > 0) {
 		        while ($row = mysql_fetch_assoc($result)) {
@@ -35,7 +66,7 @@
 			}
 
 			if(empty($error)){
-				$query = 'UPDATE users SET password="'.$newPass2.'" WHERE name="'.$_SESSION['name'].'"';
+				$query = 'UPDATE users SET password="'.$newPass2.'" WHERE username="'.$_SESSION['username'].'"';
 				$result = mysql_query($query, $db) or die (mysql_error($db));
 				if($result){
 					echo 'Password has been changed.';
@@ -108,7 +139,7 @@
 			$name = $last_id . $ext;
 			// update the image table now that the final filename is known.
 			$query = 'UPDATE users SET 
-				imag = "' . $name . '" WHERE name =" ' . $_SESSION['name'].'"';
+				imag = "' . $name . '" WHERE username =" ' . $_SESSION['username'].'"';
 			$result = mysql_query($query, $db) or die (mysql_error($db));
 			//save the image to its final destination
 			switch ($type) {
@@ -129,24 +160,24 @@
 			echo '<p><a href="change.php">Go back</a></p>';
 			break;
 		case 'changeabout':
-			$query = 'SELECT uid FROM users WHERE name="'.$_SESSION['name'].'"';
-			$result = mysql_query($query, $db) or die (mysql_error($db));
-			if (mysql_num_rows($result) > 0) {
-		        while ($row = mysql_fetch_assoc($result)) {
-		        	$uid = $row['uid'];
-		       }
-		    }
-			$query = 'INSERT INTO contents(`text`,type,created,authorId,allowComment) VALUES("'.$_POST['text'].'",0,"'.@date('Y-m-d h:m:s').'","'.$uid.'",1)';
-			$result = mysql_query($query, $db) or die (mysql_error($db));
-			if($result){
-					echo 'About Page has been changed.';
-					header ('Refresh: 1; URL= about.php');
+			if($_GET['cid']){
+				$query = 'UPDATE contents set `text`= "' . $_POST['text'] .'", modified="' . @date('Y-m-d h:m:s') . '" WHERE cid="' . $_GET['cid'] .'"';
+				$result = mysql_query($query, $db) or die (mysql_error($db));
+				echo 'About Page has been changed.';
+				header ('Refresh: 1; URL= about.php');
+			}else{
+				$query = 'INSERT INTO contents(`text`,type,created,allowComment) VALUES("'.$_POST['text'].'",0,"'.@date('Y-m-d h:m:s').'",1)';
+				$result = mysql_query($query, $db) or die (mysql_error($db));
+				if($result){
+						//echo 'About Page has been changed.';
+						//header ('Refresh: 1; URL= about.php');
+				}
 			}
 			break;
 		case 'adduser':
 			$error = array();
-			$name = isset($_POST['name']) ? trim($_POST['name']) : '';
-			if (empty($name)) {
+			$username = isset($_POST['username']) ? trim($_POST['username']) : '';
+			if (empty($username)) {
 				$error[] = urlencode('Please enter the username.');
 			}
 			$password = isset($_POST['password']) ? trim($_POST['password']) : '';
@@ -155,7 +186,7 @@
 			}
 			$authCode = isset($_POST['authCode']) ? trim($_POST['authCode']) : '';
 			if(empty($error)){
-				$query = 'INSERT INTO users(name,password,authCode) VALUES("'.$name.'","'.$password.'","'.$authCode.'")';
+				$query = 'INSERT INTO users(username,password,authCode) VALUES("'.$username.'","'.$password.'","'.$authCode.'")';
 				$result = mysql_query($query, $db) or die (mysql_error($db));
 				if($result){
 						echo 'The New User has been added.';
@@ -163,6 +194,19 @@
 				}
 			} 
 	}
-
-		include 'foot.inc.php';
 ?>
+<?php
+    // include 'adminfoot.inc.php';
+    }else{
+        header ('Refresh: 1; URL= login.php');
+        echo ' <p> You have not logged in. You will be redirected to login page. </p> ';
+            echo ' <p> If your browser doesn\'t redirect you properly ' . 
+                'automatically, <a href="login.php" >click here </a> . </p> ';
+    }
+?>
+
+    </div>
+    <div id="foot" style="clear:both;">
+    </div>
+</body>
+</html>
