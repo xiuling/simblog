@@ -8,9 +8,9 @@
     $result = mysql_query($query, $db) or die (mysql_error($db));
     if (mysql_num_rows($result) > 0) {
         while ($row = mysql_fetch_assoc($result)) {
-            echo ' <div class="contents" style="clear:both;"> ';
+            echo ' <div> ';
             echo ' <h3><a href="blog.php?cid='.$row['cid'].'"> ' . $row['title'] . '</a></h3>';
-            echo ' <p><span class="small"> type:' . $row['name'] . '&nbsp;&nbsp; created:' . $row['created'] . '&nbsp;&nbsp; comments:' . $row['commentsNum'] . '</span></p>';
+            echo ' <small> type:' . $row['name'] . '&nbsp;&nbsp; created:' . $row['created'] . '&nbsp;&nbsp; comments:' . $row['commentsNum'] . '</small>';
             echo ' <div> ' . $row['text'] . ' </div> ';
             echo ' </div> ';
 		}
@@ -18,3 +18,4 @@
     include 'sidebar.php';
 	include 'foot.inc.php';
 ?>
+

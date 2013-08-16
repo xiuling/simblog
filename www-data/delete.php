@@ -1,37 +1,9 @@
 <?php   
 	//include 'adminheader.inc.php';
-	session_start();
-    if($_SESSION['username']){
-        echo '<div class="logheader"><p class="welcome">Welcome back, '.$_SESSION['username'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></p></div>';
-?>
-<html>
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Blogs</title>
-<!--	<link rel="stylesheet" type="text/css" href="../css/base.css" />  -->
-	<link rel="stylesheet" type="text/css" href="../css/admincommon.css" />
-	<link rel="stylesheet" type="text/css" href="../css/page.css" />
-	<script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
-</head>
-<body>
-<div id="head">
-    <div id="banner"><a href="index.php">Blogs</a></div>
-	<div id="search">
-		<form method="get" action="search.php">
-			<label for="search">Search</label>
-<?php
-	echo '<input type="text" name="search" ';
-	if (isset($_GET['search'])) {
-		echo ' value="' . htmlspecialchars($_GET['search']) . '" ';
-	}
-	echo '/>';
-?>
-			<div class="button"><input type="submit" value="Search" /></div>
-		</form></div>
-</div>	
-	<div id="wrap">
+session_start();
+if($_SESSION['username']){
 
-<?php
+    include 'header.php';	
 	include 'db.inc.php';
     $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die ('Unable to connect. Check your connection parameters.');
     mysql_select_db(MYSQL_DB, $db) or die(mysql_error($db));
@@ -54,7 +26,7 @@
 			}
 
 		}
-	    echo ' </div> ';
+	   
 	} else {
 		$query = 'SELECT type, status FROM contents WHERE cid="'.$_GET['cid'].'" ORDER BY created ';
 	    $result = mysql_query($query, $db) or die (mysql_error($db));
@@ -93,10 +65,8 @@
             echo ' <p> If your browser doesn\'t redirect you properly ' . 
                 'automatically, <a href="login.php" >click here </a> . </p> ';
     }
+
+    include 'foot.inc.php';
 ?>
 
-	</div>
-	<div id="foot" style="clear:both;">
-	</div>
-</body>
-</html>
+	

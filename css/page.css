@@ -1,21 +1,10 @@
-.label{ width: 140px; display: inline-block; float: left;} 
-/*display保证设置的宽度可用，float将文字与框上面对齐 */
-.select{ width:100px;}
-.long{ width: 300px;}
-.button{ margin-top: 5px;}
-.aboutbutton{ padding-left: 140px;}
-form{padding: 0 20px;}
-.mid{ width: 300px; height: 150px;}
-.comments{padding: 5px; margin-top: 10px; border: 1px solid lightpink;}
-.comments h3{padding: 0;}
-.comments p,.comments div { padding: 10px; margin: 0;}
-.postcomment{margin: 20px;}
-
-#error { background-color: #600; border: 1px solid #FF0; color: #FFF; text-align: center; margin: 10px; padding: 10px; font-size: 17px;}
-
-th { background-color: #999;}
-.odd_row {background-color: #EEE;}
-.even_row {background-color: #FFF;}
-
+.container{width: auto; padding: 0 20px;}
+#main{width: auto; padding: 20px 80px; margin: 20px; border: 1px solid #D6C7E1;}
+#foot{margin-top: 20px;}
+.mainleft{border-right: 1px solid #D6C7E1;}
+.mainright{border-left: 1px solid #D6C7E1;}
+.comments{padding: 0 30px; width: inherit;}
+#cate{padding: 0 15px;}
+.option{border-top: 1px solid #D6C7E1;}
 
 

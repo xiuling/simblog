@@ -1,5 +1,7 @@
 <?php
     session_start();
+
+    include 'header.php';
     include 'db.inc.php';
     $db = mysql_connect(MYSQL_HOST,MYSQL_USER,MYSQL_PASSWORD) or die ('Unable to connect. Check your connection parameters.');
     mysql_select_db(MYSQL_DB, $db) or die(mysql_error($db));
@@ -35,34 +37,33 @@
         }
     }
 ?>
-<html>
-<head>
-    <title> Login </title>
-</head>
-<body>
+
     <?php
         if (isset($error)) {
             echo $error;
         }
     ?>
-    <form action="login.php" method="post">
-    <table>
-        <tr>
-            <td> Username: </td>
-            <td> <input type="text" name="username" maxlength="20" size="20" 
-                value=" <?php echo $username; ?> " /> </td>
-        </tr> 
-        <tr>
-            <td> Password: </td>
-            <td> <input type="password" name="password" maxlength="20" size="20"
-                value=" <?php echo $password; ?> " /> </td>
-        </tr> 
-        <tr>
-            <td> </td>
-            <td><input type="hidden" name="redirect" value=" <?php echo $redirect ?> " />
-                <input type="submit" name="submit" value="Login" />
-        </tr>
-    </table>
-    </form>
+    <h3>Log In</h3>
+    <form class="form-horizontal" role="form"  action="login.php" method="post">
+        <div class="form-group">
+            <label for="username" class="col-lg-2 control-label">Username</label>
+            <div class="col-lg-4">
+                <input type="text" class="form-control" id="username" placeholder="username" name="username">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="password" class="col-lg-2 control-label">Password</label>
+            <div class="col-lg-4">
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-lg-offset-2 col-lg-10">
+                <button type="submit" class="btn btn-default" name="submit">LogIn</button>
+            </div>
+        </div>
+        <input type="hidden" name="redirect" value=" <?php echo $redirect ?> " />
+    </form>    
+</div>
 </body>
 </html>

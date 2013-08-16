@@ -1,6 +1,4 @@
-<?php
-	session_start();
-?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +15,7 @@
 		    <a class="navbar-brand" href="index.php">V2XM Blog</a>
 		</div>
 		<ul class="nav navbar-nav">
-		    <li class="active"><a href="index.php">home</a></li>
+		    <li><a href="index.php">home</a></li>
 		    <li><a href="about.php">About</a></li>
 		    
 	    </ul>
@@ -55,6 +53,6 @@
 		</div>		
 	</nav>
 
-	<div class="row" id="main">
-		<div class="col-lg-10 mainleft">
+	<div id="main">
+		
 	
