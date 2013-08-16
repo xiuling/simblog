@@ -1,6 +1,7 @@
 <?php
-	session_start();
-	include 'header.php';
+session_start();
+include 'header.php';
+if(isset($_SESSION['username'])){
 	include 'db.inc.php';
     $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die ('Unable to connect. Check your connection parameters.');
     mysql_select_db(MYSQL_DB, $db) or die(mysql_error($db));
@@ -150,6 +151,12 @@
 	echo ' <p> You will be redirected to your original page request. </p> ';
             echo ' <p> If your browser doesn\'t redirect you properly ' . 
                 'automatically, <a href="admin.php" >click here </a> . </p> ';
+} else{
+	header ('Refresh: 1; URL= login.php');
+        echo ' <p> You have not logged in. You will be redirected to login page. </p> ';
+            echo ' <p> If your browser doesn\'t redirect you properly ' . 
+                'automatically, <a href="login.php" >click here </a> . </p> ';
+}
 
     include 'foot.inc.php';
 ?>

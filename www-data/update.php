@@ -1,36 +1,9 @@
 <?php
-    // include 'adminheader.inc.php';
-    session_start();
-    if($_SESSION['username']){
-        echo '<div class="logheader">Welcome back, '.$_SESSION['username'].'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="admin.php">Manage Blog</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="change.php">Profiles</a></div>';
-?>
-<html>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Blogs</title>
-<!--    <link rel="stylesheet" type="text/css" href="../css/base.css" />  -->
-    <link rel="stylesheet" type="text/css" href="../css/admincommon.css" />
-    <link rel="stylesheet" type="text/css" href="../css/page.css" />
-    <script type="text/javascript" src="../js/jquery-1.9.1.min.js"></script>
-</head>
-<body>
-    <div id="nav"><a href="index.php">Blogs</a></div>
-    <div id="search">
-        <form method="get" action="search.php">
-            <label for="search">Search</label>
-<?php
-    echo '<input type="text" name="search" ';
-    if (isset($_GET['search'])) {
-        echo ' value="' . htmlspecialchars($_GET['search']) . '" ';
-    }
-    echo '/>';
-?>
-            <input type="submit" value="Search" />
-        </form>
-    </div>
-    <div id="wrap">
 
-<?php
+session_start();
+include 'header.php';
+if(isset($_SESSION['username'])){
+ 
 	include 'db.inc.php';
     $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die ('Unable to connect. Check your connection parameters.');
     mysql_select_db(MYSQL_DB, $db) or die(mysql_error($db));
@@ -70,10 +43,10 @@
 				$result = mysql_query($query, $db) or die (mysql_error($db));
 				if($result){
 					echo 'Password has been changed.';
-					header ('Refresh: 1; URL= change.php');
+					header ('Refresh: 1; URL= profile.php');
 				}
 			}else {
-				header('Location:change.php?action=changepass'.' 
+				header('Location:profile.php?action=changepass'.' 
 					&error='.join($error, urlencode('<br />')));
 			}
 			break;
@@ -157,7 +130,7 @@
 
 			echo '<h4> Here is the picture: </h4>';
 			echo '<img src="../images/'.$name.' " style="float:left;margin-right:10px;">';
-			echo '<p><a href="change.php">Go back</a></p>';
+			echo '<p><a href="profile.php">Go back</a></p>';
 			break;
 		case 'changeabout':
 			if($_GET['cid']){
@@ -169,8 +142,8 @@
 				$query = 'INSERT INTO contents(`text`,type,created,allowComment) VALUES("'.$_POST['text'].'",0,"'.@date('Y-m-d h:m:s').'",1)';
 				$result = mysql_query($query, $db) or die (mysql_error($db));
 				if($result){
-						//echo 'About Page has been changed.';
-						//header ('Refresh: 1; URL= about.php');
+					echo 'About Page has been changed.';
+					header ('Refresh: 1; URL= about.php');
 				}
 			}
 			break;
@@ -190,7 +163,7 @@
 				$result = mysql_query($query, $db) or die (mysql_error($db));
 				if($result){
 						echo 'The New User has been added.';
-						header ('Refresh: 1; URL= change.php');
+						header ('Refresh: 1; URL= profile.php');
 				}
 			} 
 	}
@@ -203,10 +176,6 @@
             echo ' <p> If your browser doesn\'t redirect you properly ' . 
                 'automatically, <a href="login.php" >click here </a> . </p> ';
     }
-?>
 
-    </div>
-    <div id="foot" style="clear:both;">
-    </div>
-</body>
-</html>
+    include 'foot.inc.php';
+?>

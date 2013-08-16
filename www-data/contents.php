@@ -1,9 +1,9 @@
 <?php
 	//include 'adminheader.inc.php';
 session_start();
-if($_SESSION['username']){
+include 'header.php';
+if(isset($_SESSION['username'])){
 
-    include 'header.php';
 	include 'db.inc.php';
     $db = mysql_connect(MYSQL_HOST, MYSQL_USER, MYSQL_PASSWORD) or die ('Unable to connect. Check your connection parameters.');
     mysql_select_db(MYSQL_DB, $db) or die(mysql_error($db));
@@ -107,10 +107,8 @@ if($_SESSION['username']){
             echo ' <p> If your browser doesn\'t redirect you properly ' . 
                 'automatically, <a href="login.php" >click here </a> . </p> ';
     }
+
+    include 'foot.inc.php';
 ?>
 
-	</div>
-	<div id="foot" style="clear:both;">
-	</div>
-</body>
-</html>
+	

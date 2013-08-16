@@ -64,6 +64,6 @@
         </div>
         <input type="hidden" name="redirect" value=" <?php echo $redirect ?> " />
     </form>    
-</div>
-</body>
-</html>
+<?php
+    include 'foot.inc.php';
+?>
