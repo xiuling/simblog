@@ -9,51 +9,55 @@
 
 	<link rel="stylesheet" type="text/css" href="../css/page.css" />  
 	<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="../css/bootstrap-theme.min.css" />
 	
 </head>
-<body>
-	<nav class="navbar navbar-inverse" role="navigation">
-		<div class="navbar-header">
-		    <a class="navbar-brand" href="index.php">V2XM Blog</a>
-		</div>
-		<ul class="nav navbar-nav">
-		    <li class="active"><a href="index.php">home</a></li>
-		    <li><a href="about.php">About</a></li>
-		    
-	    </ul>
-		<div class="container">
-			
-			<form class="navbar-form pull-left" method="get" action="search.php">
-				<div class="input-group">
-			     
-			<?php
+<body>		
+
+<nav class="navbar navbar-inverse" role="navigation">
+  <!-- Brand and toggle get grouped for better mobile display -->
+  	<div class="navbar-header">
+    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+	      	<span class="sr-only">Toggle navigation</span>
+	      	<span class="icon-bar"></span>
+	      	<span class="icon-bar"></span>
+	      	<span class="icon-bar"></span>
+	    </button>
+    	<a class="navbar-brand" href="index.php">V2XM Blog</a>
+  	</div>
+
+  	<!-- Collect the nav links, forms, and other content for toggling -->
+  	<div class="collapse navbar-collapse navbar-ex1-collapse">
+    	<ul class="nav navbar-nav">
+      		<li class="active"><a href="index.php">Home</a></li>
+      		<li><a href="about.php">About</a></li>
+    	</ul>
+    	<form class="navbar-form navbar-left" role="search" method="get" action="search.php">
+      		<div class="form-group">
+        <?php
 				echo '<input type="text" name="search"  class="form-control" ';
 				if (isset($_GET['search'])) {
 					echo ' value="' . htmlspecialchars($_GET['search']) . '" ';
 				}
 				echo '/>';
 			?>
-				<span class="input-group-btn">
-			        <button class="btn btn-default" type="submit">Submit</button>
-			      </span>
-			    </div>
-		    </form>
-			<ul class="nav pull-right">		    	
-				<li class="pull-right"><a href="logout.php">Log Out</a></li>
-				<li class="divider-vertical pull-right"></li>
-				<li class="pull-right"><a href="login.php">Log In</a></li>
-				<?php
-		    		if(isset($_SESSION['username'])){
-		    	?>
-		    		<li class="pull-right"><a href="admin.php">Manage</a></li>
-					<li class="pull-right"><a href="profile.php"><?php echo $_SESSION['username']; ?></a></li>
-				<?php
-					}
-				?>
-				<li class="divider-vertical pull-right"></li>
-			</ul>
-		</div>		
-	</nav>
+      		</div>
+      		<button type="submit" class="btn btn-default">Submit</button>
+    	</form>
+    	<ul class="nav navbar-nav navbar-right">
+    	<?php
+		    if(isset($_SESSION['username'])){
+		?>		    		
+				<li><a href="profile.php"><?php echo $_SESSION['username']; ?></a></li>
+				<li><a href="admin.php">Manage</a></li>
+		<?php
+			}
+		?>
+	      	<li><a href="login.php">Log In</a></li>
+	      	<li><a href="logout.php">Log Out</a></li>
+    	</ul>
+  	</div><!-- /.navbar-collapse -->
+</nav>
 
 	<div class="row" id="main">
 		<div class="col-lg-10 mainleft">
